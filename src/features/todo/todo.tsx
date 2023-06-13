@@ -7,6 +7,7 @@ import {
   incrementByAmount,
   incrementSaga,
   // incrementSagaSuccess,
+  // incrementAsync,
   incrementIfOdd,
   selectCount
 } from './counterSlice'

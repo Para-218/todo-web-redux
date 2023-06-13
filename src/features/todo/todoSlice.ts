@@ -1,16 +1,29 @@
 /* eslint-disable import/named */
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { List } from 'reselect/es/types'
 import { RootState, AppThunk } from '../../app/store'
+import { fetchCount } from './todoAPI'
 
-export interface CounterState {
-  value: number
+export interface TodoState {
+  items: List
   status: 'idle' | 'loading' | 'failed'
+  info: {
+    total: number
+  }
 }
 
-const initialState: CounterState = {
-  value: 0,
-  status: 'idle'
+const initialState: TodoState = {
+  items: [],
+  status: 'idle',
+  info: {
+    total: 0
+  }
 }
+
+export const incrementAsync = createAsyncThunk('todo/fetchCount', async (amount: number) => {
+  const response = await fetchCount(amount)
+  return response.data
+})
 
 export const counterSlice = createSlice({
   name: 'counter',
@@ -33,6 +46,19 @@ export const counterSlice = createSlice({
       state.status = 'idle'
       state.value += action.payload
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(incrementAsync.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(incrementAsync.fulfilled, (state, action) => {
+        state.status = 'idle'
+        state.value += action.payload
+      })
+      .addCase(incrementAsync.rejected, (state) => {
+        state.status = 'failed'
+      })
   }
 })
 

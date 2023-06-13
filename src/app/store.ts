@@ -9,12 +9,7 @@ export const store = configureStore({
   reducer: {
     counter: counterReducer
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: true,
-      serializableCheck: false,
-      immutableCheck: false
-    }).concat(sagaMiddleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
 })
 sagaMiddleware.run(rootSaga)
 

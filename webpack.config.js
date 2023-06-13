@@ -62,7 +62,7 @@ module.exports = (env, argv) => {
             {
               loader: 'file-loader',
               options: {
-                name: isProduction ? 'static/media/[name].[contenthash:6].[ext]' : '[path][name].[ext]'
+                name: isProduction ? 'static/media/[name].[ext]' : '[path][name].[ext]'
               }
             }
           ]
@@ -82,7 +82,7 @@ module.exports = (env, argv) => {
     },
 
     output: {
-      filename: 'main.js', //File output.
+      filename: 'static/js/main.js', //File output.
       path: path.resolve(__dirname, 'dist'), // Build ra thư mục dist
       publicPath: '/'
     },
@@ -94,14 +94,14 @@ module.exports = (env, argv) => {
       static: {
         directory: path.resolve(__dirname, 'public', 'index.html'),
         serveIndex: true,
-        watch: true // khi thay đổi content trong index.html thì cũng sẽ reload
+        watch: true // khi thay đổi nội dung trong index.html thì cũng sẽ reload
       }
     },
     devtool: isProduction ? false : 'source-map',
     plugins: [
       // Đưa css ra thành một file .css riêng biệt thay vì bỏ vào file .js
       new MiniCssExtractPlugin({
-        filename: isProduction ? 'static/css/[name].[contenthash:6].css' : '[name].css'
+        filename: isProduction ? 'static/css/[name].css' : '[name].css'
       }),
       // Dùng biến môi trường env trong dự án
       new Dotenv(),
