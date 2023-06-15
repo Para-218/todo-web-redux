@@ -4,14 +4,15 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { incrementSagaSuccess, incrementSaga } from './counterSlice'
 
 function* handleIncrement(action: PayloadAction<number>) {
-  yield delay(2000)
-  console.log('Congrat. You have been waited for 2s.')
-
+  yield delay(1000)
   yield put(incrementSagaSuccess(action.payload))
 }
 
 export default function* counterSaga() {
-  console.log('Message from counterSaga call by rootSaga.')
+  console.log('Message from counterSaga called by rootSaga.')
+  fetch('https://jsonplaceholder.typicode.com/todos?userId=1&id=1')
+    .then((response) => response.json())
+    .then((json) => console.log(json))
 
   yield takeEvery(incrementSaga.toString(), handleIncrement)
 }

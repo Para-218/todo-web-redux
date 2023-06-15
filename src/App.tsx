@@ -1,12 +1,12 @@
-import logo from './assets/images/logo.svg'
-import { Counter } from './features/counter/Counter'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import './assets/styles/app.css'
+import { Counter } from './features/counter/Counter'
+import { Todo } from './features/todo/todo'
 
 function App() {
   return (
     <div className='App'>
       <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
         <Counter />
       </header>
     </div>
