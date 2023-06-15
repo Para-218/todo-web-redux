@@ -1,6 +1,6 @@
 /* eslint-disable import/named */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState, AppThunk } from '../../app/store'
+import { AppThunk, RootState } from '../../app/store'
 
 export interface CounterState {
   value: number

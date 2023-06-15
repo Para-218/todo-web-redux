@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
-import { takeEvery, put, delay } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { incrementSagaSuccess, incrementSaga } from './counterSlice'
+import { delay, put, takeEvery } from 'redux-saga/effects'
+import { incrementSaga, incrementSagaSuccess } from './counterSlice'
 
 function* handleIncrement(action: PayloadAction<number>) {
   yield delay(1000)
