@@ -1,10 +1,10 @@
+import { createAction, createReducer } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
 import FAKE_DATA from './fakedata'
-import types from './type'
 
 export interface TodoItem {
   completed: boolean
-  date: Date
+  date: string
   title: string
 }
 
@@ -17,29 +17,47 @@ export interface TodoState {
 export const initialState: TodoState = {
   items: FAKE_DATA,
   status: 'idle',
-  total: 0
+  total: FAKE_DATA.length
 }
-// reducer
-const reducer = (state = initialState, action: { type: string; message: TodoItem; index: number }) => {
-  const newState = { ...state }
-  switch (action.type) {
-    case types.ADD_TODO:
-      newState.items.push(action.message)
-      newState.total += 1
-      return newState
-    case types.REMOVE_TODO:
-      newState.items.splice(action.index, 1)
-      newState.total -= 1
-      return newState
-    case types.UPDATE_TODO:
-      newState.items.splice(action.index, 1)
-      newState.items.push(action.message)
-      return newState
-    default:
-      return newState
+// action
+export const addTodo = createAction('todo/addTodo', function prepare(message: string, date: Date) {
+  const obj = <TodoItem>{ date: date.toLocaleDateString(), title: message, completed: false }
+  return {
+    payload: obj
   }
-}
+})
+export const deleteTodo = createAction<number>('todo/deleteTodo')
 
-export const selectItems = (state: RootState) => state.items
+export const editTodo = createAction(
+  'todo/editTodo',
+  function prepare(message: string, date: Date, completed: boolean, index: number) {
+    const obj = <TodoItem>{ date: date.toLocaleDateString(), title: message, completed: completed }
+    return {
+      payload: {
+        value: obj,
+        index: index
+      }
+    }
+  }
+)
+// reducer
+export const todoReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(addTodo, (state, action) => {
+      state.items.push(action.payload)
+      state.total += 1
+    })
+    .addCase(deleteTodo, (state, action) => {
+      state.items.splice(action.payload, 1)
+      state.total -= 1
+    })
+    .addCase(editTodo, (state, action) => {
+      state.items.push(action.payload.value)
+      state.items.splice(action.payload.index, 1)
+    })
+    .addDefaultCase((state, action) => {
+      console.log(state.status, action.type)
+    })
+})
 
-export default reducer
+export const selectItems = (state: RootState) => state.todos.items

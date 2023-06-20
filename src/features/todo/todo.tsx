@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
-import { selectItems } from './reducer'
-import { addTodo, deleteTodo, editTodo } from './action'
+import { selectItems, addTodo, deleteTodo, editTodo } from './reducer'
 import styles from './Todo.module.css'
 
 export function Todo() {
@@ -21,8 +21,8 @@ export function Todo() {
   }
 
   function onEditTodo(index: number) {
-    dispatch(editTodo(message, new Date(targetDate), true, index))
-    console.log(items)
+    dispatch(addTodo(message, new Date(targetDate)))
+    dispatch(deleteTodo(index))
     setMessage('')
   }
 
@@ -33,7 +33,7 @@ export function Todo() {
           <input className={styles.textbox} defaultValue={value.title} />
         </td>
         <td>
-          <input className={styles.textbox} defaultValue={value.date.toLocaleDateString()} />
+          <input className={styles.textbox} defaultValue={value.date} />
         </td>
         <td>
           <input className={styles.textbox} defaultValue={value.completed ? 'completed' : 'uncompleted'} />

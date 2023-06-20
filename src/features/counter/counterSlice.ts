@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/named */
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AnyAction, createAction, createReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppThunk, RootState } from '../../app/store'
 
 export interface CounterState {
@@ -25,20 +26,24 @@ export const counterSlice = createSlice({
     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.value += action.payload
     },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     incrementSaga: (state, action: PayloadAction<number>) => {
       state.status = 'loading'
     },
     incrementSagaSuccess: (state, action: PayloadAction<number>) => {
       state.status = 'idle'
       state.value += action.payload
+    },
+    incrementSagaFail: (state, action: PayloadAction<number>) => {
+      state.status = 'failed'
+      console.log('failed')
     }
   }
 })
 
-export const { increment, decrement, incrementByAmount, incrementSaga, incrementSagaSuccess } = counterSlice.actions
+export const { increment, decrement, incrementByAmount, incrementSaga, incrementSagaSuccess, incrementSagaFail } =
+  counterSlice.actions
 
-export const selectCount = (state: RootState) => state.counter.value
+export const selectCount = (state: RootState) => state.counters.value
 
 export const incrementIfOdd =
   (amount: number): AppThunk =>
@@ -50,3 +55,23 @@ export const incrementIfOdd =
   }
 
 export default counterSlice.reducer
+
+const Increment = createAction('counter/increment')
+const Decrement = createAction('counter/decrement')
+const IncrementByAmount = createAction<number>('counter/incrementByAmount')
+
+export const counterReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(Increment, (state) => {
+      state.value += 1
+    })
+    .addCase(Decrement, (state) => {
+      state.value -= 1
+    })
+    .addCase(IncrementByAmount, (state, action) => {
+      state.value += action.payload
+    })
+    .addDefaultCase((state, action) => {
+      console.log(state.value, action.type)
+    })
+})
