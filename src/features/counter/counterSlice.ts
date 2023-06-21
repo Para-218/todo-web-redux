@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/named */
-import { AnyAction, createAction, createReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAction, createReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppThunk, RootState } from '../../app/store'
 
 export interface CounterState {

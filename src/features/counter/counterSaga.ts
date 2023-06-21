@@ -1,7 +1,8 @@
 /* eslint-disable import/named */
 import { PayloadAction } from '@reduxjs/toolkit'
 import { put, takeEvery } from 'redux-saga/effects'
-import { incrementSaga, incrementSagaSuccess, incrementSagaFail } from './counterSlice'
+import { incrementSaga, incrementSagaFail, incrementSagaSuccess } from './counterSlice'
+import { getJson } from './service'
 
 function* handleIncrement(action: PayloadAction<number>) {
   try {
@@ -14,8 +15,6 @@ function* handleIncrement(action: PayloadAction<number>) {
 
 export default function* counterSaga() {
   console.log('Message from counterSaga called by rootSaga.')
-  fetch('https://jsonplaceholder.typicode.com/todos?userId=1&id=1').then((response) => response.json())
-  //.then((json) => console.log(json))
-
+  getJson()
   yield takeEvery(incrementSaga.toString(), handleIncrement)
 }

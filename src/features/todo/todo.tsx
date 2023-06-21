@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
-import { selectItems, addTodo, deleteTodo, editTodo } from './reducer'
+import { selectItems, addTodo, deleteTodo, editTodo, TodoState } from './reducer'
 import styles from './Todo.module.css'
 
 export function Todo() {
@@ -98,58 +98,48 @@ export function Todo() {
 }
 
 // export class TodoList extends React.Component {
-//   obj: TodoItem[] = []
-//   state = {
-//     items: this.obj
+//   constructor(props: TodoState) {
+//     super(props)
+//     this.state = {items: []}
 //   }
 
-//   componentDidUpdate(): void {
-//     store.subscribe(() => {
-//       this.setState({
-//         items: useAppSelector(selectItems)
-//       })
-//     })
+//   onDeleteTodo = (index: number) => {
+//     const items = useAppSelector(selectItems)
+//     const dispatch = useAppDispatch()
+//     dispatch(deleteTodo(index))
 //   }
 
 //   render() {
 //     const items: JSX.Element[] = []
 
-//     this.state.items.forEach((value, index) => {
-//       items.push(
+//     const mmm = this.state.items.map((value, index) => {
+//       return (
 //         <tr key={index}>
 //           <td>
 //             <input className={styles.textbox} defaultValue={value.title} />
 //           </td>
 //           <td>
-//             <input className={styles.textbox} defaultValue={value.date.toLocaleDateString()} />
+//             <input className={styles.textbox} defaultValue={value.date} />
 //           </td>
 //           <td>
 //             <input className={styles.textbox} defaultValue={value.completed ? 'completed' : 'uncompleted'} />
 //           </td>
 //           <td>
-//             {/* <button className={styles.button} onClick={(e) => onDeleteTodo(e, index)}>
+//             <button className={styles.button} onClick={() => this.onDeleteTodo(index)}>
 //               Delete
 //             </button>
-//             <button className={styles.button} onClick={(e) => onEditTodo(e, index)}>
+//             <button className={styles.button} onClick={() => this.onDeleteTodo(index)}>
 //               Edit
-//             </button> */}
+//             </button>
 //           </td>
 //           <td></td>
 //         </tr>
 //       )
 //     })
-//     console.log(this.state.items)
-//     if (!items.length) {
-//       return (
-//         <p>
-//           <i>Please add something to do.</i>
-//         </p>
-//       )
-//     }
 
 //     return (
 //       <table>
-//         <tbody>{items}</tbody>
+//         <tbody>{mmm}</tbody>
 //       </table>
 //     )
 //   }

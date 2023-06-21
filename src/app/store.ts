@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
 import createSagaMiddleware from '@redux-saga/core'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
-import { counterReducer } from '../features/counter/counterSlice'
+import counterReducer from '../features/counter/counterSlice'
 import { todoReducer } from '../features/todo/reducer'
 import rootSaga from './rootSaga'
 
