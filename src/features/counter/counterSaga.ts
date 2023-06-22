@@ -6,7 +6,7 @@ import { getJson } from './service'
 
 function* handleIncrement(action: PayloadAction<number>) {
   try {
-    //throw 'Whoops!'
+    if (action.payload === 3) throw 'Whoops!'
     yield put(incrementSagaSuccess(action.payload))
   } catch {
     yield put(incrementSagaFail(action.payload))

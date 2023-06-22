@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
-import { selectItems, addTodo, deleteTodo, editTodo, TodoState } from './reducer'
+import { selectItems, addTodo, deleteTodo, editTodo, TodoState, TodoItem } from './reducer'
 import styles from './Todo.module.css'
 
 export function Todo() {
@@ -9,6 +9,7 @@ export function Todo() {
   const dispatch = useAppDispatch()
   const [message, setMessage] = useState('')
   const [targetDate, setTargetDate] = useState('')
+  const [ele, setEle] = useState<TodoItem[]>(items)
 
   function onAddTodo() {
     dispatch(addTodo(message, new Date(targetDate)))
@@ -26,7 +27,11 @@ export function Todo() {
     setMessage('')
   }
 
-  const mmm = items.map((value, index) => {
+  useEffect(() => {
+    setEle(items)
+  }, [items])
+
+  const mmm = ele.map((value, index) => {
     return (
       <tr key={index}>
         <td>
